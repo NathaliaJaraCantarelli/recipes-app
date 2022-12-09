@@ -71,7 +71,7 @@ export default function RecipeDetailsMeal() {
       let newValue = '';
       if (dataMeals[0][valuesMen[index]] !== undefined) {
         newValue = `${dataMeals[0][add]} - ${dataMeals[0][valuesMen[index]]}`;
-      } else { newValue = `${dataMeals[0][add]}`; }
+      }
       ingredients = [...ingredients, newValue];
     });
   }

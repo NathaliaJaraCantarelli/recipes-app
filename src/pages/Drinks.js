@@ -48,7 +48,7 @@ export default function Meals() {
     if (category === 'Shake') {
       return imageShake;
     }
-    if (category === 'Other/Unknown') {
+    if (category === 'Other / Unknown') {
       return imageOther;
     }
     if (category === 'Cocoa') {

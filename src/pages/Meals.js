@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -12,19 +12,12 @@ export default function Meals() {
     dataMeals,
     dataMealsCategory,
     isLoading,
-    error,
     categoryFilterMeals,
     setFilterMeals,
   } = useDataInfos();
 
   const [toggle, setToggle] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    if (error) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    }
-  }, [error]);
 
   const twelve = 12;
   const theFirstTwelve = dataMeals.slice(0, twelve);
@@ -108,7 +101,6 @@ export default function Meals() {
           </div>
           <div className="meals-list-image">
             {isLoading && <Loading />}
-            {error && <p>{error}</p>}
             {theFirstTwelve.map((meal, index) => (
               <button
                 className="meal-card"

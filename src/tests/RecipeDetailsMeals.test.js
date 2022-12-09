@@ -1,9 +1,11 @@
-import { screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { screen, waitForElementToBeRemoved, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RecipeDetailsMeal from '../components/RecipeDetailsMeal';
 import RecipeDetails from '../pages/RecipeDetails';
 import mockMealDetails from './helpers/mockMealDetails';
 import { renderWithRouter } from './helpers/renderWith';
+
+const mockInProgressRecipes = ['Lentils \n        - 1 cup ', 'Onion \n        - 1 large'];
 
 describe('Testes da page RecipeDetailsMeals', () => {
   const corbaPage = '/meals/52977';
@@ -71,5 +73,21 @@ describe('Testes da page RecipeDetailsMeals', () => {
     userEvent.click(favoriteBtn);
     // Não está funcionando, só pega []
     // await waitFor(() => expect(localStorage.getItem('favoriteRecipes')).toBe(JSON.stringify(favorites)));
+  });
+  it('Testa se tem inProgressRecipes', async () => {
+    const { history } = renderWithRouter(<RecipeDetails />);
+    history.push(corbaPage);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mockInProgressRecipes));
+    await waitFor(() => expect(localStorage.getItem('inProgressRecipes')).toBe(
+      JSON.stringify(mockInProgressRecipes),
+    ));
+  });
+
+  it('Testa se tem o recipe tem drink', async () => {
+    const { history } = renderWithRouter(<RecipeDetails />);
+    history.push(corbaPage);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: {} }));
+    const recipe = localStorage.getItem('inProgressRecipes');
+    await waitFor(() => expect(recipe.includes('meals')).toBeTruthy());
   });
 });

@@ -152,11 +152,6 @@ export default function RecipeDetailsDrink() {
           <p data-testid="instructions">{dataRecipe[0].strInstructions}</p>
         </div>
       )}
-      {btnInProgress && (
-        <button type="button" data-testid="start-recipe-btn">
-          Continue Recipe
-        </button>
-      )}
       <button type="button" data-testid="share-btn" onClick={ linkCopied }>
         Share
       </button>
@@ -193,7 +188,7 @@ export default function RecipeDetailsDrink() {
           data-testid="start-recipe-btn"
           className="btnStart"
         >
-          Start Recipe
+          {!btnInProgress ? 'Start Recipe' : ' Continue Recipe'}
         </button>
       </Link>
     </div>

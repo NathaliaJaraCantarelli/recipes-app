@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import RecipeDetails from '../pages/RecipeDetails';
 import { renderWithRouter } from './helpers/renderWith';
 
@@ -31,6 +32,12 @@ describe('Testes da page RecipeDetailsDrinks', () => {
     expect(recipeTitle).toBeInTheDocument();
     const btnHeart = await screen.findByTestId('favorite-btn');
     expect(btnHeart.firstChild.src).toBe('http://localhost/blackHeartIcon.svg');
+    userEvent.click(btnHeart);
+    expect(btnHeart.firstChild.src).toBe('http://localhost/whiteHeartIcon.svg');
+    userEvent.click(btnHeart);
+    expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toEqual(favorite);
+    const recomendation0 = await screen.findByTestId('0-recommendation-card');
+    expect(recomendation0).toBeInTheDocument();
   });
 
   it('Testa se o botão de continue repice está na tela meals', async () => {
@@ -61,5 +68,11 @@ describe('Testes da page RecipeDetailsDrinks', () => {
     expect(recipeTitle).toBeInTheDocument();
     const btnHeart = await screen.findByTestId('favorite-btn');
     expect(btnHeart.firstChild.src).toBe('http://localhost/blackHeartIcon.svg');
+    userEvent.click(btnHeart);
+    expect(btnHeart.firstChild.src).toBe('http://localhost/whiteHeartIcon.svg');
+    userEvent.click(btnHeart);
+    expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toEqual(favorite);
+    const recomendation0 = await screen.findByTestId('0-recommendation-card');
+    expect(recomendation0).toBeInTheDocument();
   });
 });

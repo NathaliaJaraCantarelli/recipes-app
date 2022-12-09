@@ -23,7 +23,7 @@ const mockLocalStorage = [{
   image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
 }];
 
-describe('Testes do Footer', () => {
+describe('Testes da page FavoriteRecipes', () => {
   beforeEach(() => {
     navigator.clipboard = {
       writeText: jest.fn(),

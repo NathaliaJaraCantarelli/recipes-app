@@ -6,10 +6,10 @@ import { FilterContextState } from '../context/InfoContext';
 import '../styles/Meals.css';
 
 export default function RecipeSearchsMeals() {
-  const { state: { searchInputRecipesMeals } } = useContext(FilterContextState);
+  const { filterMeals } = useContext(FilterContextState);
 
   const twelve = 12;
-  const theFirstTwelve = searchInputRecipesMeals.slice(0, twelve);
+  const theFirstTwelve = filterMeals.slice(0, twelve);
 
   return (
     <div className="meals-page">

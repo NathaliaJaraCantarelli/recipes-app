@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { fetchMeals } from '../services/fetchRecipes';
+import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
@@ -19,17 +19,14 @@ export default function ProgressDetailsMeals() {
   const errorMessage = 'Um erro inesperado ocorreu';
 
   const verifyElement = ({ target: { checked, id } }) => {
-    let allChecked = [];
-    const allChecks = document.getElementsByTagName('input', { type: 'checkbox' });
-    for (let i = 0; i < allChecks.length; i += 1) {
-      if (allChecks[i].checked) allChecked = [...allChecked, allChecks[i]];
-    }
-    if (allChecked.length === allChecks.length) setIsDone(true);
-    else setIsDone(false);
+    const checkBoxes = document.getElementsByTagName('input', { type: 'checkbox' });
+    const allChecks = [...checkBoxes];
+    const checkElements = allChecks.filter((element) => element.checked);
+    setIsDone(checkElements.length === allChecks.length);
+
     if (checked) {
       setVerifiedElements([...verifiedElements, id]);
-    }
-    if (checked === false) {
+    } else {
       setVerifiedElements(verifiedElements.filter((ele) => ele !== id));
     }
   };
@@ -55,7 +52,7 @@ export default function ProgressDetailsMeals() {
       setBtnInProgress(keysMeals.includes(`${id}`));
     }
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-    fetchMeals(url)
+    fetchData(url)
       .then((response) => setDataMealsInProgress(response.meals))
       .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));

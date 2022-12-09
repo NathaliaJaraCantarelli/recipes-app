@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { fetchDrinks } from '../services/fetchRecipes';
+import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/ProgressDetails.css';
@@ -20,17 +20,14 @@ export default function ProgressDetailsDrinks() {
   const errorMessage = 'Um erro inesperado ocorreu';
 
   const verifyElement = ({ target: { checked, id } }) => {
-    let allChecked = [];
-    const allChecks = document.getElementsByTagName('input', { type: 'checkbox' });
-    for (let i = 0; i < allChecks.length; i += 1) {
-      if (allChecks[i].checked) allChecked = [...allChecked, allChecks[i]];
-    }
-    if (allChecked.length === allChecks.length) setIsDone(true);
-    else setIsDone(false);
+    const checkBoxes = document.getElementsByTagName('input', { type: 'checkbox' });
+    const allChecks = [...checkBoxes];
+    const checkElements = allChecks.filter((element) => element.checked);
+    setIsDone(checkElements.length === allChecks.length);
+
     if (checked) {
       setVerifiedElements([...verifiedElements, id]);
-    }
-    if (checked === false) {
+    } else {
       setVerifiedElements(verifiedElements.filter((ele) => ele !== id));
     }
   };
@@ -57,7 +54,7 @@ export default function ProgressDetailsDrinks() {
       setBtnInProgress(keysDrinks.includes(`${id}`));
     }
     const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-    fetchDrinks(url)
+    fetchData(url)
       .then((response) => setDataDrinksInProgress(response.drinks))
       .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));

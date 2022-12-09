@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { fetchDrinks } from '../services/fetchRecipes';
+import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/RecipeDetails.css';
@@ -34,12 +34,12 @@ export default function RecipeDetailsMeal() {
     }
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const urlRecom = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    fetchDrinks(url)
+    fetchData(url)
       .then((response) => setDataMeals(response.meals))
-      .catch(() => console.log(errorMessage))
+      // .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));
 
-    fetchDrinks(urlRecom)
+    fetchData(urlRecom)
       .then((response) => setRecomendation(response.drinks.slice(0, SIX)))
       .catch(() => console.log(errorMessage));
 

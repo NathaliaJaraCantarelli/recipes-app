@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { fetchDrinks } from '../services/fetchRecipes';
+import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/RecipeDetails.css';
@@ -24,30 +24,34 @@ export default function RecipeDetailsDrink() {
   useEffect(() => {
     let recipe = {};
     const inProgressRecipes = localStorage.getItem('inProgressRecipes');
-    if (inProgressRecipes !== null) recipe = JSON.parse(inProgressRecipes);
+    if (inProgressRecipes) {
+      recipe = JSON.parse(inProgressRecipes);
+    }
     const keysInProgress = Object.keys(recipe);
+
     if (keysInProgress.includes('drinks')) {
       const keysDrinks = Object.keys(recipe.drinks);
       setBtnInProgress(keysDrinks.includes(`${id}`));
     }
     const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     const urlRecom = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    fetchDrinks(url)
+    fetchData(url)
       .then((response) => setDataDrinks(response.drinks))
-      .catch(() => console.log(errorMessage))
+      // .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));
 
-    fetchDrinks(urlRecom)
+    fetchData(urlRecom)
       .then((response) => setRecomendation(response.meals.slice(0, SIX)))
       .catch(() => console.log(errorMessage));
 
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes ? JSON.parse(favoriteRecipes) : [];
 
     if (getFavoritesLocalStorage.length > 0) {
-      const keysDrinks = getFavoritesLocalStorage
-        .filter((favorite) => favorite.type === 'drink');
+      const keysDrinks = getFavoritesLocalStorage.filter(
+        (favorite) => favorite.type === 'drink',
+      );
+
       if (keysDrinks.length > 0) {
         const isFav = keysDrinks.find((drink) => drink.id === id);
         setIsFavorite(isFav);
@@ -60,15 +64,19 @@ export default function RecipeDetailsDrink() {
     const keysData = Object.keys(dataDrinks[0]);
     const ingredientsFilter = keysData.filter((key) => key.includes('strIngredient'));
     const meansureFilter = keysData.filter((key) => key.includes('strMeasure'));
-    const valuesIng = ingredientsFilter
-      .filter((ingre) => (
-        dataDrinks[0][ingre] !== null) && (dataDrinks[0][ingre] !== ''));
-    const valuesMen = meansureFilter.filter((ingre) => dataDrinks[0][ingre] !== null);
+    const valuesIng = ingredientsFilter.filter(
+      (ingre) => dataDrinks[0][ingre] !== null && dataDrinks[0][ingre] !== '',
+    );
+    const valuesMen = meansureFilter.filter(
+      (ingre) => dataDrinks[0][ingre] !== null,
+    );
     valuesIng.forEach((add, index) => {
       let newValue = '';
       if (dataDrinks[0][valuesMen[index]] !== undefined) {
         newValue = `${dataDrinks[0][add]} - ${dataDrinks[0][valuesMen[index]]}`;
-      } else { newValue = `${dataDrinks[0][add]}`; }
+      } else {
+        newValue = `${dataDrinks[0][add]}`;
+      }
       ingredients = [...ingredients, newValue];
     });
   }
@@ -83,23 +91,28 @@ export default function RecipeDetailsDrink() {
   };
 
   const favorite = () => {
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
-    const newFavorite = {};
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes
+      ? JSON.parse(favoriteRecipes)
+      : [];
+
     let allFavorites = [];
     if (isFavorite) {
-      allFavorites = getFavoritesLocalStorage.filter((getFav) => getFav.id !== id);
+      allFavorites = getFavoritesLocalStorage.filter(
+        (getFav) => getFav.id !== id,
+      );
       setIsFavorite(false);
     }
-    if ((dataDrinks.length > 0) && !isFavorite) {
-      newFavorite.id = dataDrinks[0].idDrink;
-      newFavorite.type = 'drink';
-      newFavorite.nationality = '';
-      newFavorite.category = dataDrinks[0].strCategory;
-      newFavorite.alcoholicOrNot = dataDrinks[0].strAlcoholic;
-      newFavorite.name = dataDrinks[0].strDrink;
-      newFavorite.image = dataDrinks[0].strDrinkThumb;
+    if (dataDrinks.length > 0 && !isFavorite) {
+      const newFavorite = {
+        id: dataDrinks[0].idDrink,
+        type: 'drink',
+        nationality: '',
+        category: dataDrinks[0].strCategory,
+        alcoholicOrNot: dataDrinks[0].strAlcoholic,
+        name: dataDrinks[0].strDrink,
+        image: dataDrinks[0].strDrinkThumb,
+      };
       setIsFavorite(true);
       allFavorites = [...getFavoritesLocalStorage, newFavorite];
     }
@@ -109,11 +122,11 @@ export default function RecipeDetailsDrink() {
   return (
     <div className="recipe-details">
       <h1>RecipeDetails</h1>
-      { (dataRecipe.length > 0) && (
+      {dataRecipe.length > 0 && (
         <div>
-          {(!isLoading) && (
+          {!isLoading && (
             <>
-              <h2 data-testid="recipe-title">{ dataRecipe[0].strDrink }</h2>
+              <h2 data-testid="recipe-title">{dataRecipe[0].strDrink}</h2>
               <img
                 data-testid="recipe-photo"
                 src={ dataRecipe[0].strDrinkThumb }
@@ -121,29 +134,30 @@ export default function RecipeDetailsDrink() {
                 height="150px"
               />
               <h2 data-testid="recipe-category">
-                { `${dataRecipe[0].strCategory} - ${dataRecipe[0].strAlcoholic}` }
+                {`${dataRecipe[0].strCategory} - ${dataRecipe[0].strAlcoholic}`}
               </h2>
             </>
           )}
 
           <ol>
             {ingredients.map((ing, index) => (
-              <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
                 {ing}
               </li>
             ))}
           </ol>
-          <p data-testid="instructions">{ dataRecipe[0].strInstructions }</p>
+          <p data-testid="instructions">{dataRecipe[0].strInstructions}</p>
         </div>
       )}
-      { btnInProgress && (
-        <button type="button" data-testid="start-recipe-btn">Continue Recipe</button>
+      {btnInProgress && (
+        <button type="button" data-testid="start-recipe-btn">
+          Continue Recipe
+        </button>
       )}
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ linkCopied }
-      >
+      <button type="button" data-testid="share-btn" onClick={ linkCopied }>
         Share
       </button>
       {btnShare && <span>Link copied!</span>}
@@ -174,7 +188,11 @@ export default function RecipeDetailsDrink() {
         </div>
       )}
       <Link to={ `${location.pathname}/in-progress` }>
-        <button type="button" data-testid="start-recipe-btn" className="btnStart">
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="btnStart"
+        >
           Start Recipe
         </button>
       </Link>

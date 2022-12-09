@@ -1,36 +1,19 @@
 import { PropTypes } from 'prop-types';
-import { createContext, useMemo, useReducer } from 'react';
-
-const INITIAL_STATE = {
-  searchInputRecipesDrinks: [],
-  searchInputRecipesMeals: [],
-  progressDataDrinks: [],
-};
+import { useMemo, createContext, useState } from 'react';
 
 const FilterContextState = createContext();
 
-const filterReducer = (state, action) => {
-  switch (action.type) {
-  case 'ADD_FILTER-DRINKS':
-    return {
-      ...state,
-      searchInputRecipesDrinks: action.payload,
-    };
-  case 'ADD_FILTER-MEALS':
-    return {
-      ...state,
-      searchInputRecipesMeals: action.payload,
-    };
-  default:
-    return state;
-  }
-};
-
 function FilterProvider({ children }) {
-  const [state, dispatch] = useReducer(filterReducer, INITIAL_STATE);
-  const values = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+  const [filterDrinks, setFilterDrinks] = useState([]);
+  const [filterMeals, setFilterMeals] = useState([]);
+  const value = useMemo(() => ({
+    filterDrinks,
+    setFilterDrinks,
+    filterMeals,
+    setFilterMeals,
+  }), [filterDrinks, filterMeals]);
   return (
-    <FilterContextState.Provider value={ values }>
+    <FilterContextState.Provider value={ value }>
       {children}
     </FilterContextState.Provider>
   );

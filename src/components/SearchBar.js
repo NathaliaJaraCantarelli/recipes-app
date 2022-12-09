@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { FilterContextState } from '../context/InfoContext';
 
 function SearchBar({ title }) {
-  const { dispatch } = useContext(FilterContextState) || {};
+  const { setFilterDrinks, setFilterMeals } = useContext(FilterContextState) || {};
   const [redirectIdDrink, setRedirectIdDrink] = useState(false);
   const [redirectIdMeal, setRedirectIdMeal] = useState(false);
 
@@ -43,7 +43,7 @@ function SearchBar({ title }) {
           setIdMeal(repos.meals[0].idMeal);
           setRedirectSearchMeal(true);
         }
-        dispatch({ type: 'ADD_FILTER-MEALS', payload: repos.meals });
+        setFilterMeals(repos.meals);
       } else {
         global.alert('Your search must have only 1 (one) character');
       }
@@ -76,7 +76,7 @@ function SearchBar({ title }) {
           setIdDrink(repos.drinks[0].idDrink);
           setRedirectSearchDrink(true);
         }
-        dispatch({ type: 'ADD_FILTER-DRINKS', payload: repos.drinks });
+        setFilterDrinks(repos.drinks);
       } else {
         global.alert('Your search must have only 1 (one) character');
       }

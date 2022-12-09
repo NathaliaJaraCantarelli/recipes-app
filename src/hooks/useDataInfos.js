@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react';
-import {
-  // fetchData,
-  fetchDrinks,
-  fetchMeals,
-  fetchDrinksCategory,
-  fetchMealsCategory } from '../services/fetchRecipes';
-// import AppContext from '../context/AppContext';
+import fetchData from '../services/fetchRecipes';
 
 export default function useDataInfos() {
-  // const [data, setData] = useState([]);
   const [dataDrinks, setDataDrinks] = useState([]);
   const [dataMeals, setDataMeals] = useState([]);
   const [dataDrinksCategory, setDataDrinksCategory] = useState([]);
@@ -18,7 +11,7 @@ export default function useDataInfos() {
 
   const categoryFilterMeals = (category) => {
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
-    fetchMeals(url)
+    fetchData(url)
       .then((response) => setDataMeals(response.meals))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
@@ -26,7 +19,7 @@ export default function useDataInfos() {
 
   const categoryFilterDrinks = (category) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-    fetchDrinks(url)
+    fetchData(url)
       .then((response) => setDataDrinks(response.drinks))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
@@ -34,7 +27,7 @@ export default function useDataInfos() {
 
   const setFilterDrinks = () => {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    fetchDrinks(url)
+    fetchData(url)
       .then((response) => setDataDrinks(response.drinks))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
@@ -42,39 +35,33 @@ export default function useDataInfos() {
 
   const setFilterMeals = () => {
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    fetchMeals(url)
+    fetchData(url)
       .then((response) => setDataMeals(response.meals))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
-  //   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //   fetchData(url)
-  //     .then((response) => setData(response.meals))
-  //     .catch((err) => setError(err.message))
-  //     .finally(() => setIsLoading(false));
-
     const urlDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    fetchDrinks(urlDrinks)
+    fetchData(urlDrinks)
       .then((response) => setDataDrinks(response.drinks))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
 
     const urlMeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    fetchMeals(urlMeals)
+    fetchData(urlMeals)
       .then((response) => setDataMeals(response.meals))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
 
     const urlDrinksCategory = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-    fetchDrinksCategory(urlDrinksCategory)
+    fetchData(urlDrinksCategory)
       .then((response) => setDataDrinksCategory(response.drinks))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
 
     const urlMealsCategory = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-    fetchMealsCategory(urlMealsCategory)
+    fetchData(urlMealsCategory)
       .then((response) => setDataMealsCategory(response.meals))
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false));
@@ -88,11 +75,7 @@ export default function useDataInfos() {
     dataMealsCategory,
     isLoading,
     error,
-    fetchMeals,
-    fetchDrinks,
-    fetchMealsCategory,
-    fetchDrinksCategory,
-    // fetchData,
+    fetchData,
     categoryFilterMeals,
     categoryFilterDrinks,
     setFilterDrinks,

@@ -57,16 +57,17 @@ export default function ProgressDetailsMeals() {
       .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));
 
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes ? JSON.parse(favoriteRecipes) : [];
+    console.log(getFavoritesLocalStorage);
 
     if (getFavoritesLocalStorage.length > 0) {
-      const keysMeals = getFavoritesLocalStorage
-        .filter((favorite) => favorite.type === 'meal');
+      const keysMeals = getFavoritesLocalStorage.filter(
+        (favorite) => favorite.type === 'meal',
+      );
+
       if (keysMeals.length > 0) {
         const isFav = keysMeals.find((meal) => meal.id === id);
-        console.log(isFav);
         setIsFavorite(isFav);
       }
     }
@@ -93,12 +94,13 @@ export default function ProgressDetailsMeals() {
     const ids = location.pathname.slice(sete);
     const numberCut = ids.indexOf('/');
     const id = ids.slice(0, numberCut);
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes
+      ? JSON.parse(favoriteRecipes)
+      : [];
     const newFavorite = {};
     let allFavorites = [];
-    console.log(isFavorite);
+
     if (isFavorite) {
       allFavorites = getFavoritesLocalStorage.filter((getFav) => getFav.id !== id);
       setIsFavorite(false);
@@ -219,7 +221,7 @@ export default function ProgressDetailsMeals() {
         onClick={ favorite }
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
       >
-        <img src={ !isFavorite ? blackHeartIcon : whiteHeartIcon } alt="heart" />
+        <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="heart" />
       </button>
       <Link to="/done-recipes">
         <button

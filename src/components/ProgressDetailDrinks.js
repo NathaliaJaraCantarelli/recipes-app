@@ -59,13 +59,14 @@ export default function ProgressDetailsDrinks() {
       .catch(() => console.log(errorMessage))
       .finally(() => setIsLoading(false));
 
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes ? JSON.parse(favoriteRecipes) : [];
 
     if (getFavoritesLocalStorage.length > 0) {
-      const keysDrinks = getFavoritesLocalStorage
-        .filter((favorite) => favorite.type === 'drink');
+      const keysDrinks = getFavoritesLocalStorage.filter(
+        (favorite) => favorite.type === 'drink',
+      );
+
       if (keysDrinks.length > 0) {
         const isFav = keysDrinks.find((drink) => drink.id === id);
         setIsFavorite(isFav);
@@ -94,9 +95,10 @@ export default function ProgressDetailsDrinks() {
     const ids = location.pathname.slice(oito);
     const numberCut = ids.indexOf('/');
     const id = ids.slice(0, numberCut);
-    const getFavoritesLocalStorage = localStorage
-      .getItem('favoriteRecipes') ? JSON
-        .parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes');
+    const getFavoritesLocalStorage = favoriteRecipes
+      ? JSON.parse(favoriteRecipes)
+      : [];
     const newFavorite = {};
     let allFavorites = [];
     if (isFavorite) {

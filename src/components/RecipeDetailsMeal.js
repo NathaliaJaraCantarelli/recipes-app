@@ -142,14 +142,16 @@ export default function RecipeDetailsMeal() {
         <button type="button" data-testid="start-recipe-btn">Continue Recipe</button>
       )}
       <button
+        className="share-button"
         type="button"
         data-testid="share-btn"
         onClick={ linkCopied }
       >
         Share
       </button>
-      {btnShare && <span>Link copied!</span>}
+      {btnShare && <span className="copied-link">Link copied!</span>}
       <button
+        className="favorite-button"
         type="button"
         data-testid="favorite-btn"
         onClick={ favorite }

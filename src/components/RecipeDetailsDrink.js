@@ -152,11 +152,17 @@ export default function RecipeDetailsDrink() {
           <p data-testid="instructions">{dataRecipe[0].strInstructions}</p>
         </div>
       )}
-      <button type="button" data-testid="share-btn" onClick={ linkCopied }>
+      <button
+        className="share-button"
+        type="button"
+        data-testid="share-btn"
+        onClick={ linkCopied }
+      >
         Share
       </button>
-      {btnShare && <span>Link copied!</span>}
+      {btnShare && <span className="copied-link">Link copied!</span>}
       <button
+        className="favorite-button"
         type="button"
         data-testid="favorite-btn"
         onClick={ favorite }

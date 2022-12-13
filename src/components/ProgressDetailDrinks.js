@@ -162,7 +162,7 @@ export default function ProgressDetailsDrinks() {
   };
 
   return (
-    <div>
+    <div className="recipe-details">
       <h1>ProgressDrinks</h1>
       { (dataProgress.length > 0) && (
         <div>
@@ -183,7 +183,7 @@ export default function ProgressDetailsDrinks() {
 
           <ol>
             {ingredients.map((ing, index) => (
-              <div key={ index }>
+              <div className="itens-list" key={ index }>
                 <label
                   data-testid={ `${index}-ingredient-step` }
                   htmlFor={ ing }
@@ -207,14 +207,16 @@ export default function ProgressDetailsDrinks() {
         </div>
       )}
       <button
+        className="share-button"
         type="button"
         data-testid="share-btn"
         onClick={ linkCopied }
       >
         Share
       </button>
-      {btnShare && <span>Link copied!</span>}
+      {btnShare && <span className="copied-link">Link copied!</span>}
       <button
+        className="favorite-button"
         type="button"
         data-testid="favorite-btn"
         onClick={ favorite }
@@ -224,6 +226,7 @@ export default function ProgressDetailsDrinks() {
       </button>
       <Link to="/done-recipes">
         <button
+          className="finish-recipe-button"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ !isDone }

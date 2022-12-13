@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../styles/ProgressDetails.css';
 
 export default function ProgressDetailsMeals() {
   const [isLoading, setIsLoading] = useState(true);
@@ -128,7 +129,7 @@ export default function ProgressDetailsMeals() {
     const meansureFilter = keysData.filter((key) => key.includes('strMeasure'));
     const valuesIng = ingredientsFilter
       .filter((ingre) => (dataMealsInProgress[0][ingre] !== null)
-      && (dataMealsInProgress[0][ingre] !== ''));
+        && (dataMealsInProgress[0][ingre] !== ''));
     const valuesMen = meansureFilter
       .filter((ingre) => dataMealsInProgress[0][ingre] !== null);
     valuesIng.forEach((add, index) => {
@@ -164,58 +165,63 @@ export default function ProgressDetailsMeals() {
   };
 
   return (
-    <div>
+    <div className="recipe-details">
       <h1>ProgressMeals</h1>
-      { (dataProgress.length > 0) && (
+      {(dataProgress.length > 0) && (
         <div>
           {(!isLoading) && (
             <>
-              <h2 data-testid="recipe-title">{ dataProgress[0].strMeal }</h2>
+              <h2 data-testid="recipe-title">{dataProgress[0].strMeal}</h2>
               <img
                 data-testid="recipe-photo"
                 src={ dataProgress[0].strMealThumb }
                 alt={ dataProgress[0].idMeal }
                 height="150px"
               />
-              <h2 data-testid="recipe-category">{ dataProgress[0].strCategory }</h2>
+              <h2 data-testid="recipe-category">{dataProgress[0].strCategory}</h2>
             </>
           )}
 
           <ol>
-            {ingredients.map((ing, index) => (
-              <div key={ index }>
-                <label
-                  data-testid={ `${index}-ingredient-step` }
-                  htmlFor={ ing }
-                  className={ verifiedElements
-                    .some((element) => element === ing) ? 'checked' : 'noChecked' }
-                >
-                  <input
-                    onClick={ (event) => verifyElement(event) }
-                    type="checkbox"
-                    id={ ing }
-                    name={ ing }
-                    defaultChecked={ verifiedElements
-                      .some((element) => element === ing) }
-                  />
-                  {ing}
-                </label>
-              </div>
-            ))}
+            <div className="all-itens">
+              {ingredients.map((ing, index) => (
+                <div className="itens-list" key={ index }>
+                  <label
+                    data-testid={ `${index}-ingredient-step` }
+                    htmlFor={ ing }
+                    className={ verifiedElements
+                      .some((element) => element === ing) ? 'checked' : 'noChecked' }
+                  >
+                    <input
+                      onClick={ (event) => verifyElement(event) }
+                      type="checkbox"
+                      id={ ing }
+                      name={ ing }
+                      defaultChecked={ verifiedElements
+                        .some((element) => element === ing) }
+                    />
+                    {' '}
+                    {ing}
+                  </label>
+                </div>
+              ))}
+            </div>
           </ol>
-          <p data-testid="instructions">{ dataProgress[0].strInstructions }</p>
+          <p data-testid="instructions">{dataProgress[0].strInstructions}</p>
           <iframe title="video" data-testid="video" src={ a } />
         </div>
       )}
       <button
+        className="share-button"
         type="button"
         data-testid="share-btn"
         onClick={ linkCopied }
       >
         Share
       </button>
-      {btnShare && <span>Link copied!</span>}
+      {btnShare && <span className="copied-link">Link copied!</span>}
       <button
+        className="favorite-button"
         type="button"
         data-testid="favorite-btn"
         onClick={ favorite }
@@ -225,6 +231,7 @@ export default function ProgressDetailsMeals() {
       </button>
       <Link to="/done-recipes">
         <button
+          className="finish-recipe-button"
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ !isDone }

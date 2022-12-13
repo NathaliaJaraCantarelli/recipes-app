@@ -1,26 +1,38 @@
 .login-form {
   align-items: center;
   display: flex;
-  height: 100vh;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
 }
 
+.recipes_logo {
+  height: 120px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.login_image {
+  height: 200px;
+}
+
 .formLogin {
   align-items: center;
+  background-color: #fcdc35;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   height: 300px;
   justify-content: center;
-  width: 320px;
+  margin-bottom: 15px;
+  width: 350px;
 }
 
 .formLogin h1 {
-  color: white;
+  color: #41197f;
   font-size: 1.5em;
-  font-weight: 700;
-  margin-bottom: 40px;
+  font-weight: 250;
+  margin-top: 10px;
   text-shadow: 1px 1px 1px black;
 }
 
@@ -39,24 +51,24 @@
 }
 
 .formLogin button {
-  background: #c29825;
+  background: white;
   border: none;
   border-radius: 4px;
-  color: white;
+  color: #41197f;
   cursor: pointer;
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
   outline: none;
   padding: 10px;
   transition: all ease-in-out 0.3s;
-  width: 250px;
+  width: 150px;
 }
 
 .formLogin button:hover {
-  background: #e0a70a;
-  color: white;
+  background: white;
+  color: #41197f;
   scale: 1.1;
 }
 
@@ -66,9 +78,32 @@
   scale: 0.9;
 }
 
+.login_button {
+  margin-top: 25px;
+}
+
 .formLogin button:disabled {
-  background: #ccc;
+  background: white;
   box-shadow: red 0 0 10px;
   color: rgb(255, 2, 2);
   cursor: not-allowed;
+}
+
+@media screen and ( max-width : 360px ) {
+
+  .login_image {
+    height: 200px;
+    width: 100%;
+  }
+
+  .formLogin {
+    align-items: center;
+    background-color: #fcdc35;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: 285px;
+    justify-content: center;
+    width: 250px;
+  }
 }

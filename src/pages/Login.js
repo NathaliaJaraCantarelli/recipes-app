@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import '../styles/Login.css';
+import recipesLogo from '../images/recipesLogo.png';
+import tomate from '../images/tomate.png';
 
 function Login() {
   const [formEmail, setFormEmail] = useState('');
@@ -20,6 +22,8 @@ function Login() {
 
   return (
     <div className="login-form">
+      <img className="recipes_logo" src={ recipesLogo } alt="Logo" />
+      <img src={ tomate } alt="tomate" className="login_image" />
       <div className="formLogin">
         <h1>Login</h1>
         <input
@@ -34,12 +38,13 @@ function Login() {
           placeholder="Password..."
           onChange={ (event) => setPassword(event.target.value) }
         />
-        <Link to="/meals">
+        <Link to="/meals" className="login_button">
           <button
             type="button"
             data-testid="login-submit-btn"
             disabled={ !(emailValidation && passwordValidation) }
             onClick={ saveSubmition }
+
           >
             Enter
           </button>

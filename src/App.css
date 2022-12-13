@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-decoration: none;
 }
 
 html, body {
@@ -10,7 +11,7 @@ html, body {
 }
 
 .App {
-  background-color: darkcyan;
+  background-color: #41197f;
   height: 100%;
   width: 100%;
 }

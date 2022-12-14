@@ -4,6 +4,7 @@ import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/ProgressDetails.css';
+import ReturnButton from './ReturnButton';
 
 export default function ProgressDetailsMeals() {
   const [isLoading, setIsLoading] = useState(true);
@@ -164,8 +165,11 @@ export default function ProgressDetailsMeals() {
     localStorage.setItem('doneRecipes', JSON.stringify(getDoneRecipes));
   };
 
+  const DOZE = 12;
+
   return (
     <div className="recipe-details">
+      <ReturnButton location={ location.pathname.slice(0, DOZE) } />
       <h1>ProgressMeals</h1>
       {(dataProgress.length > 0) && (
         <div>

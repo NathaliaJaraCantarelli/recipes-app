@@ -69,8 +69,8 @@ p {
   box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.5);
   display: flex;
   height: 230px;
-  margin-bottom: 60px;
-  margin-top: 10px;
+  margin-bottom: 70px;
+  margin-top: -40px;
   overflow: auto;
   overflow-y: hidden;
   width: 344px;
@@ -96,7 +96,6 @@ p {
   font-size: 1rem;
   font-weight: 700;
   height: 30px;
-  margin-bottom: -30px;
   transition: all ease-in-out 0.3s;
   width: 100px;
 }
@@ -116,8 +115,8 @@ p {
   color: black;
   font-size: 1rem;
   font-weight: 700;
-  margin-bottom: -40px;
-  margin-top: 40px;
+  margin-bottom: 10px;
+  margin-top: -30px;
   text-align: center;
   text-shadow: 2px 2px 4px white;
 }

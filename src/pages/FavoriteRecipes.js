@@ -57,6 +57,7 @@ function FavoriteRecipes() {
   return (
     <div>
       <HeaderNoSearch title="Favorite Recipes" />
+
       <div className="filters">
         <button type="button" data-testid="filter-by-all-btn" onClick={ allFilter }>
           All

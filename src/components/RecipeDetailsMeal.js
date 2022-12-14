@@ -4,6 +4,7 @@ import fetchData from '../services/fetchRecipes';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/RecipeDetails.css';
+import ReturnButton from './ReturnButton';
 
 export default function RecipeDetailsMeal() {
   const [isLoading, setIsLoading] = useState(true);
@@ -111,6 +112,7 @@ export default function RecipeDetailsMeal() {
 
   return (
     <div className="recipe-details">
+      <ReturnButton location="/meals" />
       <h1>RecipeDetails</h1>
       { (dataRecipe.length > 0) && (
         <div>

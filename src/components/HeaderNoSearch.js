@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
+import '../styles/HeaderNoSearch.css';
 
 function Header({ title }) {
   return (

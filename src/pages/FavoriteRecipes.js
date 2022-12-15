@@ -55,7 +55,7 @@ function FavoriteRecipes() {
   };
 
   return (
-    <div>
+    <div className="favorite-recipes">
       <HeaderNoSearch title="Favorite Recipes" />
 
       <div className="filters">
@@ -65,11 +65,14 @@ function FavoriteRecipes() {
         <button type="button" data-testid="filter-by-meal-btn" onClick={ mealsFilter }>
           Meals
         </button>
-        <button type="button" data-testid="filter-by-drink-btn" onClick={ drinksFilter }>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ drinksFilter }
+        >
           Drinks
         </button>
       </div>
-      {btnShare && <span>Link copied!</span>}
       <ul>
         { arrayFavorites && (arrayFavorites.map((favoriteMeal, indexMeal) => (
           <li key={ indexMeal }>
@@ -123,10 +126,10 @@ function FavoriteRecipes() {
                 />
               </button>
             </div>
+            {btnShare && <span>Link copied!</span>}
           </li>
         )))}
       </ul>
-
     </div>
   );
 }

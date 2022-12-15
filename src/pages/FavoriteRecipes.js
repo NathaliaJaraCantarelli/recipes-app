@@ -55,83 +55,81 @@ function FavoriteRecipes() {
   };
 
   return (
-    <>
+    <div className="favorite-recipes">
       <HeaderNoSearch title="Favorite Recipes" />
-      <div className="favorite-recipes">
-        <div className="filters">
-          <button type="button" data-testid="filter-by-all-btn" onClick={ allFilter }>
-            All
-          </button>
-          <button type="button" data-testid="filter-by-meal-btn" onClick={ mealsFilter }>
-            Meals
-          </button>
-          <button
-            type="button"
-            data-testid="filter-by-drink-btn"
-            onClick={ drinksFilter }
-          >
-            Drinks
-          </button>
-        </div>
-        <ul>
-          { arrayFavorites && (arrayFavorites.map((favoriteMeal, indexMeal) => (
-            <li key={ indexMeal }>
-              <button type="button" onClick={ imgTeste } className="btnRecipes">
+      <div className="filters">
+        <button type="button" data-testid="filter-by-all-btn" onClick={ allFilter }>
+          All
+        </button>
+        <button type="button" data-testid="filter-by-meal-btn" onClick={ mealsFilter }>
+          Meals
+        </button>
+        <button
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ drinksFilter }
+        >
+          Drinks
+        </button>
+      </div>
+      <ul>
+        { arrayFavorites && (arrayFavorites.map((favoriteMeal, indexMeal) => (
+          <li key={ indexMeal }>
+            <button type="button" onClick={ imgTeste } className="btnRecipes">
+              <img
+                className="imgRecipes"
+                src={ favoriteMeal.image }
+                alt="recipe"
+                data-testid={ `${indexMeal}-horizontal-image` }
+                name={ indexMeal }
+              />
+            </button>
+            <p data-testid={ `${indexMeal}-horizontal-top-text` }>
+              {favoriteMeal.type === 'meal' ? (
+                `${favoriteMeal.nationality} - ${favoriteMeal.category}`
+              ) : `${favoriteMeal.alcoholicOrNot}` }
+            </p>
+            <button
+              name={ indexMeal }
+              type="button"
+              onClick={ imgTeste }
+              data-testid={ `${indexMeal}-horizontal-name` }
+            >
+              { favoriteMeal.name }
+            </button>
+            <div className="buttons">
+              <button
+                type="button"
+                data-testid={ `${indexMeal}-horizontal-share-btn` }
+                src={ shareIcon }
+                onClick={ linkCopied }
+              >
                 <img
-                  className="imgRecipes"
-                  src={ favoriteMeal.image }
-                  alt="recipe"
-                  data-testid={ `${indexMeal}-horizontal-image` }
-                  name={ indexMeal }
+                  src={ shareIcon }
+                  alt="icon share"
+                  className="imgBtn"
+                  name={ `${favoriteMeal.type}s/${favoriteMeal.id}` }
                 />
               </button>
-              <p data-testid={ `${indexMeal}-horizontal-top-text` }>
-                {favoriteMeal.type === 'meal' ? (
-                  `${favoriteMeal.nationality} - ${favoriteMeal.category}`
-                ) : `${favoriteMeal.alcoholicOrNot}` }
-              </p>
               <button
-                name={ indexMeal }
                 type="button"
-                onClick={ imgTeste }
-                data-testid={ `${indexMeal}-horizontal-name` }
+                data-testid={ `${indexMeal}-horizontal-favorite-btn` }
+                src={ blackHeartIcon }
+                onClick={ (event) => unfavorite(event) }
               >
-                { favoriteMeal.name }
-              </button>
-              <div className="buttons">
-                <button
-                  type="button"
-                  data-testid={ `${indexMeal}-horizontal-share-btn` }
-                  src={ shareIcon }
-                  onClick={ linkCopied }
-                >
-                  <img
-                    src={ shareIcon }
-                    alt="icon share"
-                    className="imgBtn"
-                    name={ `${favoriteMeal.type}s/${favoriteMeal.id}` }
-                  />
-                </button>
-                <button
-                  type="button"
-                  data-testid={ `${indexMeal}-horizontal-favorite-btn` }
+                <img
+                  name={ indexMeal }
                   src={ blackHeartIcon }
-                  onClick={ (event) => unfavorite(event) }
-                >
-                  <img
-                    name={ indexMeal }
-                    src={ blackHeartIcon }
-                    alt="icon black heart"
-                    className="imgBtn"
-                  />
-                </button>
-              </div>
-              {btnShare && <span>Link copied!</span>}
-            </li>
-          )))}
-        </ul>
-      </div>
-    </>
+                  alt="icon black heart"
+                  className="imgBtn"
+                />
+              </button>
+            </div>
+            {btnShare && <span>Link copied!</span>}
+          </li>
+        )))}
+      </ul>
+    </div>
   );
 }
 
